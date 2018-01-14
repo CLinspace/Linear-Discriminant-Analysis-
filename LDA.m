@@ -1,9 +1,9 @@
-data = xlsread('C:\Users\³Âµä³É\Desktop\»úÆ÷Ñ§Ï°--ÖÜÖ¾»ª\old_´úÂë\µÚÈıÕÂ\LDA\watermelon_data'); %´ÓexcelÖĞµ¼ÈëÊı¾İ¡£
+data = xlsread('xxx\LDA\watermelon_data'); %ä»excelä¸­å¯¼å…¥æ•°æ®ã€‚
 x_data_1 = (data(:,1))';
 x_data_2 = (data(:,2))';
 x_data = [x_data_1;x_data_2];
 y_data = (data(:,3))';
-%¼ÆËã¾ùÖµ
+%è®¡ç®—å‡å€¼
 u = zeros(2,1);
 for i = 1:8
     u = u+x_data(:,i);
@@ -15,10 +15,10 @@ for i = 1:9
 end
 u_bad = u./9;
 clear u;
-%¼ÆËãĞ­·½²î
-COV_good = cov(x_data(:,1:8)');  %covµÄÓÃ·¨£ºÃ¿ĞĞÎªÃ¿Ò»¸ö¹Û²âµã  Ã¿ÁĞÎªÒ»¸ö¹Û²âµãµÄÒ»¸ö±äÁ¿
+%è®¡ç®—åæ–¹å·®
+COV_good = cov(x_data(:,1:8)');  %covçš„ç”¨æ³•ï¼šæ¯è¡Œä¸ºæ¯ä¸€ä¸ªè§‚æµ‹ç‚¹  æ¯åˆ—ä¸ºä¸€ä¸ªè§‚æµ‹ç‚¹çš„ä¸€ä¸ªå˜é‡
 COV_bad = cov(x_data(:,9:17)');
-%ÀàÄÚÉ¢¶È¾ØÕó
+%ç±»å†…æ•£åº¦çŸ©é˜µ
 S_w1 = zeros(2,2);
 for i = 1:8
     S_w1 = S_w1+(x_data(:,i) - u_good)*(x_data(:,i) - u_good)';
@@ -28,10 +28,10 @@ for i = 1:8
     S_w2 = S_w2+(x_data(:,i+8) - u_bad)*(x_data(:,i+8) - u_bad)';
 end
 S_w = S_w1 + S_w2;
-%ÆæÒìÖµ·Ö½âS_w
+%å¥‡å¼‚å€¼åˆ†è§£S_w
 [U,S,V] = svd (S_w);
 w = (V/S*(U'))*(u_good-u_bad);
-%×÷Í¼
+%ä½œå›¾
 for i=1:17     
     if y_data(i) == 1
        plot(x_data(1,i),x_data(2,i),'+r');
@@ -44,6 +44,6 @@ for i=1:17
 end
 refline(-w(1,:)/w(2,:));
 
-xlabel('ÃÜ¶È');
-ylabel('º¬ÌÇÂÊ');
-title('ÏßĞÔÅĞ±ğ·ÖÎö£¨LDA£©'); 
+xlabel('å¯†åº¦');
+ylabel('å«ç³–ç‡');
+title('çº¿æ€§åˆ¤åˆ«åˆ†æï¼ˆLDAï¼‰'); 
